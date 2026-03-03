@@ -1,0 +1,17 @@
+{
+  "name": "openfang-termux",
+  "version": "1.0.0",
+  "description": "OpenFang - AI Gateway for Termux",
+  "main": "lib/index.js",
+  "type": "module",
+  "bin": {
+    "openfangx": "./bin/openfangx"
+  },
+  "scripts": {
+    "start": "node bin/openfangx"
+  },
+  "keywords": ["openfang", "ai", "gateway", "termux", "android"],
+  "author": "OpenFang Team",
+  "license": "MIT",
+  "dependencies": {}
+}

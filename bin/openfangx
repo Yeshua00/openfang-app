@@ -1,0 +1,10 @@
+#!/bin/bash
+#
+# OpenFang CLI for Termux
+# Wraps the OpenFang Rust binary with proot/Ubuntu setup
+#
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+NODE_BIN="$SCRIPT_DIR/../lib"
+
+exec node "$NODE_BIN/index.js" "$@"
