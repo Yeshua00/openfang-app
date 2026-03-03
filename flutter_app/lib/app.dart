@@ -3,28 +3,39 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'providers/setup_provider.dart';
 import 'providers/gateway_provider.dart';
+import 'providers/node_provider.dart';
 import 'screens/splash_screen.dart';
 
+/// Centralized color palette for the entire app.
 class AppColors {
   AppColors._();
 
-  static const Color accent = Color(0xFF00D4AA);
+  // Brand accent
+  static const Color accent = Color(0xFFDC2626);
+
+  // Dark mode
   static const Color darkBg = Color(0xFF0A0A0A);
   static const Color darkSurface = Color(0xFF121212);
   static const Color darkSurfaceAlt = Color(0xFF1A1A1A);
   static const Color darkBorder = Color(0xFF2A2A2A);
+
+  // Light mode
   static const Color lightBg = Color(0xFFFFFFFF);
   static const Color lightSurface = Color(0xFFF9F9F9);
   static const Color lightBorder = Color(0xFFE5E5E5);
+
+  // Status
   static const Color statusGreen = Color(0xFF22C55E);
   static const Color statusAmber = Color(0xFFF59E0B);
   static const Color statusRed = Color(0xFFEF4444);
   static const Color statusGrey = Color(0xFF6B7280);
+
+  // Text
   static const Color mutedText = Color(0xFF6B7280);
 }
 
-class OpenFangApp extends StatelessWidget {
-  const OpenFangApp({super.key});
+class OpenClawApp extends StatelessWidget {
+  const OpenClawApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +43,16 @@ class OpenFangApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => SetupProvider()),
         ChangeNotifierProvider(create: (_) => GatewayProvider()),
+        ChangeNotifierProxyProvider<GatewayProvider, NodeProvider>(
+          create: (_) => NodeProvider(),
+          update: (_, gatewayProvider, nodeProvider) {
+            nodeProvider!.onGatewayStateChanged(gatewayProvider.state);
+            return nodeProvider;
+          },
+        ),
       ],
       child: MaterialApp(
-        title: 'OpenFang',
+        title: 'OpenClaw',
         debugShowCheckedModeBanner: false,
         theme: _buildLightTheme(),
         darkTheme: _buildDarkTheme(),

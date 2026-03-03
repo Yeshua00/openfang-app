@@ -1,5 +1,5 @@
 name: openfang
-description: OpenFang AI Agent Operating System for Android
+description: OpenFang AI Gateway for Android - standalone, no Termux required.
 publish_to: 'none'
 version: 1.0.0+1
 
@@ -32,4 +32,12 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/
+    - assets/bionic_bypass.js
+    - assets/resolv.conf
+    - assets/ic_launcher.png
+  fonts:
+    - family: DejaVuSansMono
+      fonts:
+        - asset: assets/fonts/DejaVuSansMono.ttf
+        - asset: assets/fonts/DejaVuSansMono-Bold.ttf
+          weight: 700

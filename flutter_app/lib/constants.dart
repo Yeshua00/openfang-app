@@ -11,11 +11,9 @@ class AppConstants {
   static const String license = 'MIT';
 
   static const String orgName = 'OpenFang';
-  static const String dashboardCredits = 'Dashboard built by Yeshua';
 
   static const String gatewayHost = '127.0.0.1';
   static const int gatewayPort = 5555;
-  static const String gatewayDashboardPort = '4200';
   static const String gatewayUrl = 'http://$gatewayHost:$gatewayPort';
 
   static const String ubuntuRootfsUrl =

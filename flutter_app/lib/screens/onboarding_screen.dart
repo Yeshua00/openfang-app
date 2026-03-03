@@ -36,7 +36,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final _ctrlNotifier = ValueNotifier<bool>(false);
   final _altNotifier = ValueNotifier<bool>(false);
   static final _anyUrlRegex = RegExp(r'https?://[^\s<>\[\]"' "'" r'\)]+');
-  static final _tokenUrlRegex = RegExp(r'https?://(?:localhost|127\.0\.0\.1):(5555|4200)/#token=[0-9a-f]+');
+  static final _tokenUrlRegex = RegExp(r'https?://(?:localhost|127\.0\.0\.1):18789/#token=[0-9a-f]+');
   static final _ansiEscape = AppConstants.ansiEscape;
   /// Box-drawing and other TUI characters that break URLs when copied
   static final _boxDrawing = RegExp(r'[│┤├┬┴┼╮╯╰╭─╌╴╶┌┐└┘◇◆]+');
@@ -102,7 +102,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       onboardingArgs.removeLast(); // remove '/bin/bash'
       onboardingArgs.addAll([
         '/bin/bash', '-lc',
-        'echo "=== OpenFang Onboarding ===" && '
+        'echo "=== OpenClaw Onboarding ===" && '
         'echo "Configure your API keys and binding settings." && '
         'echo "TIP: Select Loopback (127.0.0.1) when asked for binding!" && '
         'echo "" && '
@@ -123,7 +123,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       _pty!.output.cast<List<int>>().listen((data) {
         final text = utf8.decode(data, allowMalformed: true);
         _terminal.write(text);
-        // Scan output for token URL (e.g. http://localhost:5555/#token=...)
+        // Scan output for token URL (e.g. http://localhost:18789/#token=...)
         _outputBuffer += text;
         // Keep buffer manageable
         if (_outputBuffer.length > 4096) {
@@ -392,7 +392,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('OpenFang Onboarding'),
+        title: const Text('OpenClaw Onboarding'),
         leading: widget.isFirstRun
             ? null // no back button during first-run
             : IconButton(

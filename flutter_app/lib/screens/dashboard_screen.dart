@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../constants.dart';
 import '../providers/gateway_provider.dart';
+import '../providers/node_provider.dart';
 import '../widgets/gateway_controls.dart';
 import '../widgets/status_card.dart';
+import 'node_screen.dart';
 import 'configure_screen.dart';
 import 'onboarding_screen.dart';
 import 'terminal_screen.dart';
@@ -23,7 +25,7 @@ class DashboardScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('OpenFang'),
+        title: const Text('OpenClaw'),
         actions: [
           IconButton(
             icon: const Icon(Icons.settings),
@@ -53,7 +55,7 @@ class DashboardScreen extends StatelessWidget {
             ),
             StatusCard(
               title: 'Terminal',
-              subtitle: 'Open Ubuntu shell with OpenFang',
+              subtitle: 'Open Ubuntu shell with OpenClaw',
               icon: Icons.terminal,
               trailing: const Icon(Icons.chevron_right),
               onTap: () => Navigator.of(context).push(
@@ -65,7 +67,7 @@ class DashboardScreen extends StatelessWidget {
                 return StatusCard(
                   title: 'Web Dashboard',
                   subtitle: provider.state.isRunning
-                      ? 'Open OpenFang dashboard in browser'
+                      ? 'Open OpenClaw dashboard in browser'
                       : 'Start gateway first',
                   icon: Icons.dashboard,
                   trailing: const Icon(Icons.chevron_right),
@@ -144,19 +146,37 @@ class DashboardScreen extends StatelessWidget {
                 MaterialPageRoute(builder: (_) => const SettingsScreen()),
               ),
             ),
+            Consumer<NodeProvider>(
+              builder: (context, nodeProvider, _) {
+                final nodeState = nodeProvider.state;
+                return StatusCard(
+                  title: 'Node',
+                  subtitle: nodeState.isPaired
+                      ? 'Connected to gateway'
+                      : nodeState.isDisabled
+                          ? 'Device capabilities for AI'
+                          : nodeState.statusText,
+                  icon: Icons.devices,
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => const NodeScreen()),
+                  ),
+                );
+              },
+            ),
             const SizedBox(height: 24),
             Center(
               child: Column(
                 children: [
                   Text(
-                    'OpenFang v${AppConstants.version}',
+                    'OpenClaw v${AppConstants.version}',
                     style: theme.textTheme.bodySmall?.copyWith(
                       color: theme.colorScheme.onSurfaceVariant,
                     ),
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    'by RightNow AI | Dashboard by Yeshua',
+                    'by ${AppConstants.authorName} | ${AppConstants.orgName}',
                     style: theme.textTheme.bodySmall?.copyWith(
                       color: theme.colorScheme.onSurfaceVariant,
                     ),

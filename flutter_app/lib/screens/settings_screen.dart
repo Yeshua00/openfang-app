@@ -6,8 +6,10 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../app.dart';
 import '../constants.dart';
+import '../providers/node_provider.dart';
 import '../services/native_bridge.dart';
 import '../services/preferences_service.dart';
+import 'node_screen.dart';
 import 'setup_wizard_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -129,6 +131,32 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   },
                 ),
                 const Divider(),
+                _sectionHeader(theme, 'NODE'),
+                SwitchListTile(
+                  title: const Text('Enable Node'),
+                  subtitle: const Text('Provide device capabilities to the gateway'),
+                  value: _nodeEnabled,
+                  onChanged: (value) {
+                    setState(() => _nodeEnabled = value);
+                    _prefs.nodeEnabled = value;
+                    final nodeProvider = context.read<NodeProvider>();
+                    if (value) {
+                      nodeProvider.enable();
+                    } else {
+                      nodeProvider.disable();
+                    }
+                  },
+                ),
+                ListTile(
+                  title: const Text('Node Configuration'),
+                  subtitle: const Text('Connection, pairing, and capabilities'),
+                  leading: const Icon(Icons.devices),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => const NodeScreen()),
+                  ),
+                ),
+                const Divider(),
                 _sectionHeader(theme, 'SYSTEM INFO'),
                 ListTile(
                   title: const Text('Architecture'),
@@ -155,7 +183,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   leading: const Icon(Icons.code),
                 ),
                 ListTile(
-                  title: const Text('OpenFang'),
+                  title: const Text('OpenClaw'),
                   subtitle: Text(_status['openclawInstalled'] == true
                       ? 'Installed'
                       : 'Not installed'),
@@ -212,26 +240,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 const Divider(),
                 _sectionHeader(theme, 'ABOUT'),
                 const ListTile(
-                  title: Text('OpenFang'),
+                  title: Text('OpenClaw'),
                   subtitle: Text(
-                    'AI Agent Operating System\nVersion ${AppConstants.version}',
+                    'AI Gateway for Android\nVersion ${AppConstants.version}',
                   ),
                   leading: Icon(Icons.info_outline),
                   isThreeLine: true,
                 ),
                 const ListTile(
-                  title: Text('Creator'),
-                  subtitle: Text('RightNow AI'),
+                  title: Text('Developer'),
+                  subtitle: Text(AppConstants.authorName),
                   leading: Icon(Icons.person),
                 ),
                 ListTile(
-                  title: const Text('Dashboard'),
-                  subtitle: const Text('Built by Yeshua'),
-                  leading: Icon(Icons.dashboard),
-                ),
-                ListTile(
                   title: const Text('GitHub'),
-                  subtitle: const Text('RightNow-AI/openfang'),
+                  subtitle: const Text('mithun50/openclaw-termux'),
                   leading: const Icon(Icons.code),
                   trailing: const Icon(Icons.open_in_new, size: 18),
                   onTap: () => launchUrl(
@@ -254,25 +277,44 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   leading: Icon(Icons.description),
                 ),
                 const Divider(),
-                _sectionHeader(theme, 'LINKS'),
+                _sectionHeader(theme, AppConstants.orgName.toUpperCase()),
                 ListTile(
-                  title: const Text('GitHub'),
-                  subtitle: const Text('RightNow-AI/openfang'),
-                  leading: const Icon(Icons.code),
+                  title: const Text('Instagram'),
+                  subtitle: const Text('@nexgenxplorer_nxg'),
+                  leading: const Icon(Icons.camera_alt),
                   trailing: const Icon(Icons.open_in_new, size: 18),
                   onTap: () => launchUrl(
-                    Uri.parse('https://github.com/RightNow-AI/openfang'),
+                    Uri.parse(AppConstants.instagramUrl),
                     mode: LaunchMode.externalApplication,
                   ),
                 ),
                 ListTile(
-                  title: const Text('Website'),
-                  subtitle: const Text('openfang.sh'),
-                  leading: const Icon(Icons.language),
+                  title: const Text('YouTube'),
+                  subtitle: const Text('@nexgenxplorer'),
+                  leading: const Icon(Icons.play_circle_fill),
                   trailing: const Icon(Icons.open_in_new, size: 18),
                   onTap: () => launchUrl(
-                    Uri.parse('https://openfang.sh'),
+                    Uri.parse(AppConstants.youtubeUrl),
                     mode: LaunchMode.externalApplication,
+                  ),
+                ),
+                ListTile(
+                  title: const Text('Play Store'),
+                  subtitle: const Text('NextGenX Apps'),
+                  leading: const Icon(Icons.shop),
+                  trailing: const Icon(Icons.open_in_new, size: 18),
+                  onTap: () => launchUrl(
+                    Uri.parse(AppConstants.playStoreUrl),
+                    mode: LaunchMode.externalApplication,
+                  ),
+                ),
+                ListTile(
+                  title: const Text('Email'),
+                  subtitle: const Text(AppConstants.orgEmail),
+                  leading: const Icon(Icons.email_outlined),
+                  trailing: const Icon(Icons.open_in_new, size: 18),
+                  onTap: () => launchUrl(
+                    Uri.parse('mailto:${AppConstants.orgEmail}'),
                   ),
                 ),
               ],
