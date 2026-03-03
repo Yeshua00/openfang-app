@@ -6,10 +6,8 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../app.dart';
 import '../constants.dart';
-import '../providers/node_provider.dart';
 import '../services/native_bridge.dart';
 import '../services/preferences_service.dart';
-import 'node_screen.dart';
 import 'setup_wizard_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -146,15 +144,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       nodeProvider.disable();
                     }
                   },
-                ),
-                ListTile(
-                  title: const Text('Node Configuration'),
-                  subtitle: const Text('Connection, pairing, and capabilities'),
-                  leading: const Icon(Icons.devices),
-                  trailing: const Icon(Icons.chevron_right),
-                  onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => const NodeScreen()),
-                  ),
                 ),
                 const Divider(),
                 _sectionHeader(theme, 'SYSTEM INFO'),
