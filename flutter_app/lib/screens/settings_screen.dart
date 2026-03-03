@@ -129,23 +129,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   },
                 ),
                 const Divider(),
-                _sectionHeader(theme, 'NODE'),
-                SwitchListTile(
-                  title: const Text('Enable Node'),
-                  subtitle: const Text('Provide device capabilities to the gateway'),
-                  value: _nodeEnabled,
-                  onChanged: (value) {
-                    setState(() => _nodeEnabled = value);
-                    _prefs.nodeEnabled = value;
-                    final nodeProvider = context.read<NodeProvider>();
-                    if (value) {
-                      nodeProvider.enable();
-                    } else {
-                      nodeProvider.disable();
-                    }
-                  },
-                ),
-                const Divider(),
                 _sectionHeader(theme, 'SYSTEM INFO'),
                 ListTile(
                   title: const Text('Architecture'),
