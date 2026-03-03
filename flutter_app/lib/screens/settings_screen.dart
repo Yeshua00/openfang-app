@@ -132,30 +132,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 const Divider(),
                 _sectionHeader(theme, 'NODE'),
-                SwitchListTile(
-                  title: const Text('Enable Node'),
-                  subtitle: const Text('Provide device capabilities to the gateway'),
-                  value: _nodeEnabled,
-                  onChanged: (value) {
-                    setState(() => _nodeEnabled = value);
-                    _prefs.nodeEnabled = value;
-                    final nodeProvider = context.read<NodeProvider>();
-                    if (value) {
-                      nodeProvider.enable();
-                    } else {
-                      nodeProvider.disable();
-                    }
-                  },
-                ),
-                ListTile(
-                  title: const Text('Node Configuration'),
-                  subtitle: const Text('Connection, pairing, and capabilities'),
-                  leading: const Icon(Icons.devices),
-                  trailing: const Icon(Icons.chevron_right),
-                  onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => const NodeScreen()),
-                  ),
-                ),
                 const Divider(),
                 _sectionHeader(theme, 'SYSTEM INFO'),
                 ListTile(
