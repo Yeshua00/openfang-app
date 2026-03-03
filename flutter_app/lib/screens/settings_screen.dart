@@ -6,10 +6,8 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../app.dart';
 import '../constants.dart';
-import '../providers/node_provider.dart';
 import '../services/native_bridge.dart';
 import '../services/preferences_service.dart';
-import 'node_screen.dart';
 import 'setup_wizard_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
