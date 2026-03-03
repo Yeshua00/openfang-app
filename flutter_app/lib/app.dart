@@ -3,15 +3,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'providers/setup_provider.dart';
 import 'providers/gateway_provider.dart';
-import 'providers/node_provider.dart';
 import 'screens/splash_screen.dart';
 
 /// Centralized color palette for the entire app.
 class AppColors {
   AppColors._();
 
-  // Brand accent
-  static const Color accent = Color(0xFFDC2626);
+  // Brand accent - OpenFang teal
+  static const Color accent = Color(0xFF00D4AA);
 
   // Dark mode
   static const Color darkBg = Color(0xFF0A0A0A);
@@ -34,8 +33,8 @@ class AppColors {
   static const Color mutedText = Color(0xFF6B7280);
 }
 
-class OpenClawApp extends StatelessWidget {
-  const OpenClawApp({super.key});
+class OpenFangApp extends StatelessWidget {
+  const OpenFangApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -43,16 +42,9 @@ class OpenClawApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => SetupProvider()),
         ChangeNotifierProvider(create: (_) => GatewayProvider()),
-        ChangeNotifierProxyProvider<GatewayProvider, NodeProvider>(
-          create: (_) => NodeProvider(),
-          update: (_, gatewayProvider, nodeProvider) {
-            nodeProvider!.onGatewayStateChanged(gatewayProvider.state);
-            return nodeProvider;
-          },
-        ),
       ],
       child: MaterialApp(
-        title: 'OpenClaw',
+        title: 'OpenFang',
         debugShowCheckedModeBanner: false,
         theme: _buildLightTheme(),
         darkTheme: _buildDarkTheme(),
